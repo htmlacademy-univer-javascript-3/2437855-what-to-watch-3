@@ -1,18 +1,15 @@
 import Logo from '../../components/logo/logo';
 import Footer from '../../components/footer/footer';
 import {FilmCard} from '../../components/filmCard/filmCard';
-import FilmsList from '../../components/filmList/filmList';
-import { Films } from '../../types/film';
 
 type MainPageProps = {
   filmTitle: string;
   filmGenre: string;
   filmYear: number;
-  films: Films;
 }
 
 
-function MainPage({filmTitle, filmGenre, filmYear, films}: MainPageProps): JSX.Element {
+function MainPage({filmTitle, filmGenre, filmYear}: MainPageProps): JSX.Element {
   return (
     <>
       <section className="film-card">

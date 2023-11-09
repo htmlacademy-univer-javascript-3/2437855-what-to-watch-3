@@ -14,7 +14,7 @@ function FilmsList({ films }: CatalogFilmsListProps): JSX.Element {
       <div className="catalog__films-list">
         {films.map(({id: filmId, alt, src}) =>
           (
-            <FilmCard key={filmId} alt={alt} src={src} onMouseEnter={() => setId(filmId)} onMouseLeave={() => setId(null)}/>
+            <FilmCard key={filmId} name={alt} imgSrc={src} onMouseEnter={() => setId(filmId)} onMouseLeave={() => setId(null)}/>
           ))}
       </div>
       <div className="catalog__more">
