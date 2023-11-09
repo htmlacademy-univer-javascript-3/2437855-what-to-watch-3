@@ -1,4 +1,5 @@
 import Logo from '../../components/logo/logo';
+import {Link} from 'react-router-dom';
 
 
 function AddReviewPage(): JSX.Element {
@@ -17,7 +18,7 @@ function AddReviewPage(): JSX.Element {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <a href="film-page.html" className="breadcrumbs__link">The Grand Budapest Hotel</a>
+                <Link to="film-page.html" className="breadcrumbs__link">The Grand Budapest Hotel</Link>
               </li>
               <li className="breadcrumbs__item">
                 <a className="breadcrumbs__link">Add review</a>
