@@ -1,15 +1,17 @@
 import Logo from '../../components/logo/logo';
 import Footer from '../../components/footer/footer';
-import {FilmCard} from '../../components/filmCard/filmCard';
+import { Films } from '../../types/film';
+import FilmsList from '../../components/filmList/filmList';
 
 type MainPageProps = {
   filmTitle: string;
   filmGenre: string;
   filmYear: number;
+  films: Films;
 }
 
 
-function MainPage({filmTitle, filmGenre, filmYear}: MainPageProps): JSX.Element {
+function MainPage({filmTitle, filmGenre, filmYear, films}: MainPageProps): JSX.Element {
   return (
     <>
       <section className="film-card">
@@ -103,29 +105,7 @@ function MainPage({filmTitle, filmGenre, filmYear}: MainPageProps): JSX.Element 
               <a href="#" className="catalog__genres-link">Thrillers</a>
             </li>
           </ul>
-
-          <div className="catalog__films-list">
-            <FilmCard name={'Fantastic Beasts: The Crimes of Grindelwald'} filmLink={'movie-page.html'} imgSrc={'img/fantastic-beasts-the-crimes-of-grindelwald.jpg'}/>
-            <FilmCard name={'Bohemian Rhapsody'} filmLink={'movie-page.html'} imgSrc={'img/bohemian-rhapsody.jpg'}/>
-            <FilmCard name={'Macbeth'} filmLink={'movie-page.html'} imgSrc={'img/macbeth.jpg'}/>
-            <FilmCard name={'Aviator'} filmLink={'movie-page.html'} imgSrc={'img/aviator.jpg'}/>
-            <FilmCard name={'We need to talk about Kevin'} filmLink={'movie-page.html'} imgSrc={'img/we-need-to-talk-about-kevin.jpg'}/>
-            <FilmCard name={'What We Do in the Shadows'} filmLink={'movie-page.html'} imgSrc={'img/what-we-do-in-the-shadows.jpg'}/>
-            <FilmCard name={'Revenant'} filmLink={'movie-page.html'} imgSrc={'img/revenant.jpg'}/>
-            <FilmCard name={'Johnny English'} filmLink={'movie-page.html'} imgSrc={'img/revenant.jpg'}/>
-            <FilmCard name={'Shutter Island'} filmLink={'movie-page.html'} imgSrc={'img/shutter-island.jpg'}/>
-            <FilmCard name={'Pulp Fiction'} filmLink={'movie-page.html'} imgSrc={'img/pulp-fiction.jpg'}/>
-            <FilmCard name={'No Country for Old Men'} filmLink={'movie-page.html'} imgSrc={'img/no-country-for-old-men.jpg'}/>
-            <FilmCard name={'Snatch'} filmLink={'movie-page.html'} imgSrc={'img/snatch.jpg'}/>
-            <FilmCard name={'Moonrise Kingdom'} filmLink={'movie-page.html'} imgSrc={'img/moonrise-kingdom.jpg'}/>
-            <FilmCard name={'Seven Years in Tibet'} filmLink={'movie-page.html'} imgSrc={'img/seven-years-in-tibet.jpg'}/>
-            <FilmCard name={'Midnight Special'} filmLink={'movie-page.html'} imgSrc={'img/midnight-special.jpg'}/>
-            <FilmCard name={'War of the Worlds'} filmLink={'movie-page.html'} imgSrc={'img/war-of-the-worlds.jpg'}/>
-            <FilmCard name={'Dardjeeling Limited'} filmLink={'movie-page.html'} imgSrc={'img/dardjeeling-limited.jpg'}/>
-            <FilmCard name={'Orlando'} filmLink={'movie-page.html'} imgSrc={'img/orlando.jpg'}/>
-            <FilmCard name={'Mindhunter'} filmLink={'movie-page.html'} imgSrc={'img/mindhunter.jpg'}/>
-            <FilmCard name={'Midnight Special'} filmLink={'movie-page.html'} imgSrc={'img/midnight-special.jpg'}/>
-          </div>
+          <FilmsList films={films}/>
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
           </div>
