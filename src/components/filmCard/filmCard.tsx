@@ -1,21 +1,47 @@
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+
+import { Film } from '../../types/film';
+import VideoPlayer from '../video-player/VideoPlayer';
 import { AppRoute } from '../const';
-import { MouseEventHandler } from 'react';
-import {Link} from 'react-router-dom';
 
 export type FilmCardProps = {
-  name: string;
-  imgSrc: string;
-  onMouseEnter?: MouseEventHandler<HTMLElement> | undefined;
-  onMouseLeave?: MouseEventHandler<HTMLElement> | undefined;
+  film: Film;
+};
+
+function FilmCard({ film }: FilmCardProps): JSX.Element {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [needToActiveVideo, setNeedToActiveVideo] = useState(false);
+
+  useEffect(() => {
+    if (needToActiveVideo) {
+      setIsPlaying(true);
+    }
+  }, [needToActiveVideo]);
+
+  return (
+    <article
+      className="small-film-card catalog__films-card"
+      onMouseEnter={() => setNeedToActiveVideo(true)}
+      onMouseLeave={() => {
+        setNeedToActiveVideo(false);
+        setIsPlaying(false);
+      }}
+    >
+      <div className="small-film-card__image">
+        <VideoPlayer
+          isPlaying={isPlaying}
+          src={film.src}
+          poster={film.srcPoster}
+        />
+      </div>
+      <h3 className="small-film-card__title">
+        <Link className="small-film-card__link" to={AppRoute.Film}>
+          {film.filmName}
+        </Link>
+      </h3>
+    </article>
+  );
 }
 
-export const FilmCard = ({name, imgSrc, onMouseEnter, onMouseLeave}:FilmCardProps) => (
-  <article className="small-film-card catalog__films-card" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-    <div className="small-film-card__image">
-      <img src={imgSrc} alt={name} width="280" height="175"/>
-    </div>
-    <h3 className="small-film-card__title">
-      <Link className="small-film-card__link" to={AppRoute.Film}>{name}</Link>
-    </h3>
-  </article>
-);
+export default FilmCard;

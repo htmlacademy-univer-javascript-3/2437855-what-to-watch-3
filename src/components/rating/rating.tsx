@@ -1,6 +1,6 @@
 type RatingProps = {
   num: number;
-}
+};
 
 function Rating({ num }: RatingProps): JSX.Element {
   return (
