@@ -31,7 +31,6 @@ function FilmCard({ film }: FilmCardProps): JSX.Element {
       <div className="small-film-card__image">
         <VideoPlayer
           isPlaying={isPlaying}
-          isMuting
           src={film.src}
           poster={film.srcPoster}
         />
