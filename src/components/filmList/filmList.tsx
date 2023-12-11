@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { Films } from '../../types/film';
 import FilmCard from '../filmCard/filmCard';
 
