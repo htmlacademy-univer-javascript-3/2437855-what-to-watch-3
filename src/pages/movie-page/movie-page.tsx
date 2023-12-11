@@ -5,6 +5,8 @@ import Footer from '../../components/footer/footer';
 import FilmCard from '../../components/filmCard/filmCard';
 import { Film } from '../../types/film';
 import { AppRoute } from '../../components/const';
+import FilmTabs from '../../components/film-tabs/film-tabs';
+import { FILMS } from '../../mocks/films';
 
 type FilmPageProps = {
   film: Film;
@@ -88,53 +90,7 @@ function MoviePage({ film }: FilmPageProps): JSX.Element {
               />
             </div>
 
-            <div className="film-card__desc">
-              <nav className="film-nav film-card__nav">
-                <ul className="film-nav__list">
-                  <li className="film-nav__item film-nav__item--active">
-                    <Link to="#" className="film-nav__link">
-                      Overview
-                    </Link>
-                  </li>
-                  <li className="film-nav__item">
-                    <Link to="#" className="film-nav__link">
-                      Details
-                    </Link>
-                  </li>
-                  <li className="film-nav__item">
-                    <Link to="#" className="film-nav__link">
-                      Reviews
-                    </Link>
-                  </li>
-                </ul>
-              </nav>
-
-              <div className="film-rating">
-                <div className="film-rating__score">{film.rating.score}</div>
-                <p className="film-rating__meta">
-                  <span className="film-rating__level">
-                    {film.rating.level}
-                  </span>
-                  <span className="film-rating__count">
-                    {film.rating.count}
-                  </span>
-                </p>
-              </div>
-
-              <div className="film-card__text">
-                <p>{film.textPart1}</p>
-
-                <p>{film.textPart2}</p>
-
-                <p className="film-card__director">
-                  <strong>Director: {film.director}</strong>
-                </p>
-
-                <p className="film-card__starring">
-                  <strong>Starring: {film.starring}</strong>
-                </p>
-              </div>
-            </div>
+            <FilmTabs film={film} />
           </div>
         </div>
       </section>
@@ -144,14 +100,11 @@ function MoviePage({ film }: FilmPageProps): JSX.Element {
           <h2 className="catalog__title">More like this</h2>
 
           <div className="catalog__films-list">
-            <FilmCard
-              film={film}
-            />
-            <FilmCard
-              film={film}
-            />
-            <FilmCard film={film} />
-            <FilmCard film={film} />
+            {FILMS.filter((value) => value.filmGenre === film.filmGenre)
+              .slice(0, 4)
+              .map((currFilm) => (
+                <FilmCard key={currFilm.id} film={currFilm} />
+              ))}
           </div>
         </section>
         <Footer />
