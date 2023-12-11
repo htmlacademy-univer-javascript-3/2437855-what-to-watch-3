@@ -5,19 +5,26 @@ import { Films } from '../../types/film';
 
 type MyListPageProps = {
   films: Films;
-}
+};
 
-function MyListPage({films}: MyListPageProps): JSX.Element {
+function MyListPage({ films }: MyListPageProps): JSX.Element {
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
-        <Logo isLight={false}/>
+        <Logo isLight />
 
-        <h1 className="page-title user-page__title">My list <span className="user-page__film-count">9</span></h1>
+        <h1 className="page-title user-page__title">
+          My list <span className="user-page__film-count">9</span>
+        </h1>
         <ul className="user-block">
           <li className="user-block__item">
             <div className="user-block__avatar">
-              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
+              <img
+                src="img/avatar.jpg"
+                alt="User avatar"
+                width="63"
+                height="63"
+              />
             </div>
           </li>
           <li className="user-block__item">
@@ -27,9 +34,9 @@ function MyListPage({films}: MyListPageProps): JSX.Element {
       </header>
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
-        <FilmsList films={films}/>
+        <FilmsList films={films} />
       </section>
-      <Footer/>
+      <Footer />
     </div>
   );
 }

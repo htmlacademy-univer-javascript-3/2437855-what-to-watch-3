@@ -18,7 +18,9 @@ function CommentForm(): JSX.Element {
       <form action="#" className="add-review__form">
         <div className="rating">
           <div className="rating__stars">
-            {ratingList.map((value) => (<Rating key={value} num={value} />))}
+            {ratingList.map((value) => (
+              <Rating key={value} num={value} />
+            ))}
           </div>
         </div>
         <div className="add-review__text">
