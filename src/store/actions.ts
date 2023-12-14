@@ -6,3 +6,5 @@ export const changeGenre = createAction('main/changeGenre', (genre: Genre) => ({
 }));
 
 export const getGenreFilms = createAction('main/getGenreFilms');
+
+export const setFilmCardCount = createAction('main/setFilmCardCount');
