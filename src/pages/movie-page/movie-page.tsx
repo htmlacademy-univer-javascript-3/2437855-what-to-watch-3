@@ -1,18 +1,21 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import Logo from '../../components/logo/logo';
 import Footer from '../../components/footer/footer';
 import FilmCard from '../../components/filmCard/filmCard';
-import { Film } from '../../types/film';
+import { Films } from '../../types/film';
 import { AppRoute } from '../../components/const';
 import FilmTabs from '../../components/film-tabs/film-tabs';
-import { FILMS } from '../../mocks/films';
 
 type FilmPageProps = {
-  film: Film;
+  films: Films;
 };
 
-function MoviePage({ film }: FilmPageProps): JSX.Element {
+function MoviePage({ films }: FilmPageProps): JSX.Element {
+  const { id } = useParams();
+  const currentFilmId = Number(id);
+  const film = films.at(currentFilmId);
+
   return (
     <>
       <section className="film-card film-card--full">
@@ -100,7 +103,7 @@ function MoviePage({ film }: FilmPageProps): JSX.Element {
           <h2 className="catalog__title">More like this</h2>
 
           <div className="catalog__films-list">
-            {FILMS.filter((value) => value.filmGenre === film.filmGenre)
+            {films.filter((value) => value.filmGenre === film.filmGenre)
               .slice(0, 4)
               .map((currFilm) => (
                 <FilmCard key={currFilm.id} film={currFilm} />
