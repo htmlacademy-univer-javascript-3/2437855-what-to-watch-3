@@ -1,7 +1,7 @@
 import { FILMS } from '../../mocks/films.ts';
 import { changeGenre, getGenreFilms } from '../../store/actions.ts';
-import { Genre } from '../const.ts';
 import { useAppSelector, useAppDispatch } from '../../hook/useAppDispatch.ts';
+import { Genre } from '../const';
 
 function GenreList(): JSX.Element {
   const dispatch = useAppDispatch();

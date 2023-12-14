@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Film } from '../../types/film';
 import VideoPlayer from '../video-player/VideoPlayer';
 import { AppRoute } from '../const';
+import './filmCard.css';
 
 export type FilmCardProps = {
   film: Film;
@@ -29,11 +30,16 @@ function FilmCard({ film }: FilmCardProps): JSX.Element {
       }}
     >
       <div className="small-film-card__image">
-        <VideoPlayer
-          isPlaying={isPlaying}
-          src={film.src}
-          poster={film.srcPoster}
-        />
+        {!isPlaying ? (
+          <img src={film.srcPoster} alt={film.filmName}/>
+        ) : (
+          <VideoPlayer
+            isPlaying={isPlaying}
+            isMuting
+            src={film.src}
+            poster={film.srcPoster}
+          />
+        )}
       </div>
       <h3 className="small-film-card__title">
         <Link className="small-film-card__link" to={AppRoute.Film}>
