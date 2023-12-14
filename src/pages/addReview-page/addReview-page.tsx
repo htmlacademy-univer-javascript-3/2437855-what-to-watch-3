@@ -1,15 +1,19 @@
 import Logo from '../../components/logo/logo';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { Film } from '../../types/film';
+import { Films } from '../../types/film';
 import { AppRoute } from '../../components/const';
 import CommentForm from '../../components/commentForm/commentForm';
 
 type AddReviewProps = {
-  film: Film;
+  films: Films;
 };
 
-function AddReviewPage({ film }: AddReviewProps): JSX.Element {
+function AddReviewPage({ films }: AddReviewProps): JSX.Element {
+  const { id } = useParams();
+  const currentFilmId = Number(id);
+  const film = films.at(currentFilmId);
+
   return (
     <section className="film-card film-card--full">
       <Helmet>

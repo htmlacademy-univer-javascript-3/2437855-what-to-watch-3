@@ -1,4 +1,5 @@
 import { Genre } from '../components/const';
+import { store } from '../store';
 
 export type Film = {
   id: number;
@@ -23,3 +24,6 @@ export type Rating = {
 };
 
 export type Films = Film[];
+
+export type State = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
