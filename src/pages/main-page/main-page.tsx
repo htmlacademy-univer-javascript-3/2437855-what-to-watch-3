@@ -2,6 +2,7 @@ import Footer from '../../components/footer/footer';
 import FilmsList from '../../components/filmList/filmList';
 import GenreList from '../../components/genre-list/genre-list';
 import { useAppSelector } from '../../hook/useAppDispatch';
+import ShowMore from '../../components/show-more/show-more';
 
 type MainPageProps = {
   filmTitle: string;
@@ -15,6 +16,7 @@ function MainPage({
   filmYear,
 }: MainPageProps): JSX.Element {
   const filmsGenre = useAppSelector((state) => state.films);
+  const filmCardCount = useAppSelector((state) => state.filmCardCount);
   return (
     <>
       <section className="film-card">
@@ -103,14 +105,10 @@ function MainPage({
           <GenreList />
 
           <div className="catalog__films-list">
-            <FilmsList films={filmsGenre} />
+            <FilmsList films={filmsGenre.slice(0, filmCardCount)} />
           </div>
 
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">
-              Show more
-            </button>
-          </div>
+          {filmCardCount !== filmsGenre.length && <ShowMore />}
         </section>
         <Footer />
       </div>
