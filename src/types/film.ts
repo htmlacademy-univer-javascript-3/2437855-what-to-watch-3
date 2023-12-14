@@ -1,9 +1,11 @@
+import { Genre } from '../components/const';
+
 export type Film = {
   id: number;
   src: string;
   alt: string;
   filmName: string;
-  filmGenre: string;
+  filmGenre: Genre;
   filmYear: number;
   srcPoster: string;
   altPoster: string;
