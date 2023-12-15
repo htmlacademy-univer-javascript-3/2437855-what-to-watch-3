@@ -6,7 +6,8 @@ import { useAppDispatch, useAppSelector } from '../../hook/useAppDispatch';
 import { AuthorizationStatus } from '../const';
 
 function User(): JSX.Element {
-  const { userData, authorizationStatus } = useAppSelector((state) => state);
+  const userData = useAppSelector((state) => state.userData);
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const dispatch = useAppDispatch();
 
   const signOutClickHandler = (e: React.MouseEvent<HTMLAnchorElement>) => {

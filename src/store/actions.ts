@@ -1,7 +1,8 @@
 import { createAction } from '@reduxjs/toolkit';
 import { AuthorizationStatus, Genre } from '../components/const';
-import { Film } from '../types';
 import { UserData } from '../types/authorization';
+import { Film, Films } from '../types/film';
+import { ReviewArray } from '../types/review';
 
 export const Action = {
   CHANGE_GENRE: 'main/changeGenre',
@@ -13,14 +14,17 @@ export const Action = {
   SET_DATA_IS_LOADING: 'setDataIsLoading',
   APP_SET_ERROR: 'app/setError',
   SAVE_USER: 'saveUser',
+  LOAD_FILM: 'loadFilm',
+  LOAD_REVIEWS: 'loadReviews',
+  LOAD_SIMILAR: 'loadSimilarFilms',
 };
 
-export const changeGenre = createAction(
+export const changeGenre = createAction<Genre>(
   Action.CHANGE_GENRE,
   (genre: Genre) => ({ payload: genre }),
 );
 export const setFilmCardCount = createAction(Action.SET_FILM_CARD_COUNT);
-export const fillFilms = createAction<Film[]>(Action.FILL_FILMS);
+export const fillFilms = createAction<Films>(Action.FILL_FILMS);
 export const setDataIsLoading = createAction<boolean>(
   Action.SET_DATA_IS_LOADING,
 );
@@ -29,3 +33,6 @@ export const setAuthorizationStatus = createAction<AuthorizationStatus>(
 );
 export const setError = createAction<string | null>(Action.APP_SET_ERROR);
 export const saveUser = createAction<UserData>(Action.SAVE_USER);
+export const loadFilm = createAction<Film>(Action.LOAD_FILM);
+export const loadReviews = createAction<ReviewArray>(Action.LOAD_REVIEWS);
+export const loadSimilarFilms = createAction<Films>(Action.LOAD_SIMILAR);

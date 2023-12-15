@@ -1,15 +1,10 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
-import { Films } from '../../../types/film';
 
-type DetailsProps = {
-  films: Films;
-};
+import { useAppSelector } from '../../../hook/useAppDispatch';
 
-function Details({ films }: DetailsProps): JSX.Element {
-  const { id } = useParams();
-  const currentFilmId = Number(id);
-  const film = films.at(currentFilmId);
+
+function Details(): JSX.Element {
+  const film = useAppSelector((state) => state.film);
 
   return (
     <div className="film-card__text film-card__row">

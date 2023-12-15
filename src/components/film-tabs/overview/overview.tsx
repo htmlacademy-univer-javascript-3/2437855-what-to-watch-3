@@ -1,14 +1,7 @@
-import { useParams } from 'react-router-dom';
-import { Films } from '../../../types/film';
+import { useAppSelector } from '../../../hook/useAppDispatch';
 
-type OverviewProps = {
-  films: Films;
-};
-
-function Overview({ films }: OverviewProps): JSX.Element {
-  const { id } = useParams();
-  const currentFilmId = Number(id);
-  const film = films.at(currentFilmId);
+function Overview(): JSX.Element {
+  const film = useAppSelector((state) => state.film);
 
   return (
     <>

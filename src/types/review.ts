@@ -7,4 +7,10 @@ export type Review = {
   filmId?: number;
 }
 
+export type UserReview = {
+  filmId: string;
+  rating: number;
+  comment: string;
+}
+
 export type ReviewArray = Review[];
