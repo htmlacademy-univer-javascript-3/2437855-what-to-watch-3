@@ -15,6 +15,7 @@ export type Film = {
   textPart2: string;
   director: string;
   starring: string[];
+  runTime: string;
 };
 
 export type Rating = {

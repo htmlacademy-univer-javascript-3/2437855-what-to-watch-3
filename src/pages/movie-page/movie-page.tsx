@@ -1,22 +1,38 @@
+import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import Logo from '../../components/logo/logo';
 import Footer from '../../components/footer/footer';
-import FilmCard from '../../components/filmCard/filmCard';
 import { Films } from '../../types/film';
-import { AppRoute } from '../../components/const';
+import { AuthorizationStatus } from '../../components/const';
 import FilmTabs from '../../components/film-tabs/film-tabs';
 import User from '../../components/user/user';
+import { useAppDispatch, useAppSelector } from '../../hook/useAppDispatch';
+import { setDataIsLoading } from '../../store/actions';
+import {
+  fetchFilmByID,
+  fetchReviewsByID,
+  fetchSimilarByID,
+} from '../../store/api-action';
+import FilmsList from '../../components/filmList/filmList';
 
-type FilmPageProps = {
-  films: Films;
-};
 
-function MoviePage({ films }: FilmPageProps): JSX.Element {
+function MoviePage(): JSX.Element {
   const { id } = useParams();
-  const currentFilmId = Number(id);
-  const film = films.at(currentFilmId);
+  const dispatch = useAppDispatch();
+  const film = useAppSelector((state) => state.film);
+  const similarFilms = useAppSelector((state) => state.similarFilms);
+  const authorizationStatus = useAppSelector(
+    (state) => state.authorizationStatus,
+  );
 
+  useEffect(() => {
+    dispatch(setDataIsLoading(true));
+    dispatch(fetchFilmByID(String(id)));
+    dispatch(fetchSimilarByID(String(id)));
+    dispatch(fetchReviewsByID(String(id)));
+    dispatch(setDataIsLoading(false));
+  }, [id, dispatch]);
   return (
     <>
       <section className="film-card film-card--full">
@@ -61,9 +77,14 @@ function MoviePage({ films }: FilmPageProps): JSX.Element {
                   <span>My list</span>
                   <span className="film-card__count">9</span>
                 </button>
-                <Link to={AppRoute.Film} className="btn film-card__button">
-                  Add review
-                </Link>
+                {authorizationStatus === AuthorizationStatus.Auth && (
+                  <Link
+                    to={`/films/${film.id}/review`}
+                    className="btn film-card__button"
+                  >
+                    Add review
+                  </Link>
+                )}
               </div>
             </div>
           </div>
@@ -80,7 +101,7 @@ function MoviePage({ films }: FilmPageProps): JSX.Element {
               />
             </div>
 
-            <FilmTabs film={film} />
+            <FilmTabs />
           </div>
         </div>
       </section>
@@ -90,12 +111,7 @@ function MoviePage({ films }: FilmPageProps): JSX.Element {
           <h2 className="catalog__title">More like this</h2>
 
           <div className="catalog__films-list">
-            {films
-              .filter((value) => value.filmGenre === film.filmGenre)
-              .slice(0, 4)
-              .map((currFilm) => (
-                <FilmCard key={currFilm.id} film={currFilm} />
-              ))}
+            <FilmsList films={similarFilms} />
           </div>
         </section>
         <Footer />

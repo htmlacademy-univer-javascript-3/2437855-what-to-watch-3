@@ -3,13 +3,18 @@ import { createReducer } from '@reduxjs/toolkit';
 import { AuthorizationStatus, Genre } from '../components/const';
 import {
   changeGenre,
-  fillFilms, saveUser,
+  fillFilms,
+  loadFilm,
+  loadReviews,
+  loadSimilarFilms,
+  saveUser,
   setAuthorizationStatus,
   setDataIsLoading,
   setFilmCardCount,
 } from './actions';
-import { Films } from '../types/film';
+import { Film, Films } from '../types/film';
 import { UserData } from '../types/authorization';
+import { ReviewArray } from '../types/review';
 
 type InitialState = {
   genre: Genre;
@@ -20,6 +25,9 @@ type InitialState = {
   error: string | null;
   userData: UserData | null;
   authorizationStatus: AuthorizationStatus;
+  film: Film | null;
+  reviews: ReviewArray;
+  similarFilms: Films;
 };
 
 export const initialState: InitialState = {
@@ -31,11 +39,18 @@ export const initialState: InitialState = {
   error: null,
   userData: null,
   authorizationStatus: AuthorizationStatus.Unknown,
+  film: null,
+  reviews: [],
+  similarFilms: [],
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder
+    .addCase(saveUser, (state, action) => {
+      state.userData = action.payload;
+    })
     .addCase(changeGenre, (state, action) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       state.genre = action.payload;
       state.sortedFilmList =
         state.genre === Genre.All
@@ -61,8 +76,14 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(setAuthorizationStatus, (state, action) => {
       state.authorizationStatus = action.payload;
     })
-    .addCase(saveUser, (state, action) => {
-      state.userData = action.payload;
+    .addCase(loadFilm, (state, action) => {
+      state.film = action.payload;
+    })
+    .addCase(loadReviews, (state, action) => {
+      state.reviews = action.payload;
+    })
+    .addCase(loadSimilarFilms, (state, action) => {
+      state.similarFilms = action.payload;
     });
 });
 
