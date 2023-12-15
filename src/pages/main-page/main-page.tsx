@@ -1,23 +1,30 @@
 import Footer from '../../components/footer/footer';
 import FilmsList from '../../components/filmList/filmList';
 import GenreList from '../../components/genre-list/genre-list';
-import { useAppSelector } from '../../hook/useAppDispatch';
+import { useAppDispatch, useAppSelector } from '../../hook/useAppDispatch';
 import ShowMore from '../../components/show-more/show-more';
 import User from '../../components/user/user';
+import { fetchPromoFilm } from '../../store/api-action';
+import { useEffect } from 'react';
+import {
+  getFilms,
+  getGenres,
+  getIsLoading,
+  getPromoFilm,
+  getSelectedGenre,
+} from '../../store/main-reducer/main-selector';
 
-type MainPageProps = {
-  filmTitle: string;
-  filmGenre: string;
-  filmYear: number;
-};
+function MainPage(): JSX.Element {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchPromoFilm());
+  }, [dispatch]);
+  const isLoading = useAppSelector(getIsLoading);
+  const selectedGenre = useAppSelector(getSelectedGenre);
+  const films = useAppSelector(getFilms);
+  const promoFilm = useAppSelector(getPromoFilm);
+  const genres = useAppSelector(getGenres);
 
-function MainPage({
-  filmTitle,
-  filmGenre,
-  filmYear,
-}: MainPageProps): JSX.Element {
-  const filmsGenre = useAppSelector((state) => state.sortedFilmList);
-  const filmCardCount = useAppSelector((state) => state.filmCardCount);
   return (
     <>
       <section className="film-card">
