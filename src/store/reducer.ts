@@ -3,13 +3,13 @@ import { createReducer } from '@reduxjs/toolkit';
 import { AuthorizationStatus, Genre } from '../components/const';
 import {
   changeGenre,
-  fillFilms,
+  fillFilms, saveUser,
   setAuthorizationStatus,
   setDataIsLoading,
-  setError,
   setFilmCardCount,
 } from './actions';
 import { Films } from '../types/film';
+import { UserData } from '../types/authorization';
 
 type InitialState = {
   genre: Genre;
@@ -17,6 +17,8 @@ type InitialState = {
   sortedFilmList: Films;
   filmCardCount: number;
   dataIsLoading: boolean;
+  error: string | null;
+  userData: UserData | null;
   authorizationStatus: AuthorizationStatus;
 };
 
@@ -26,6 +28,8 @@ export const initialState: InitialState = {
   sortedFilmList: [],
   filmCardCount: 8,
   dataIsLoading: false,
+  error: null,
+  userData: null,
   authorizationStatus: AuthorizationStatus.Unknown,
 };
 
@@ -57,6 +61,9 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(setAuthorizationStatus, (state, action) => {
       state.authorizationStatus = action.payload;
     })
+    .addCase(saveUser, (state, action) => {
+      state.userData = action.payload;
+    });
 });
 
 export { reducer };

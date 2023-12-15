@@ -1,24 +1,25 @@
 import { useState } from 'react';
 
-import { Film } from '../../types/film';
+import { Films } from '../../types/film';
 import Overview from '../film-tabs/overview/overview';
 import Details from '../film-tabs/details/details';
 import Reviews from '../film-tabs/reviews/reviews';
 import { REVIEWS } from '../../mocks/reviews';
 
 type FilmTabsProps = {
-  film: Film;
+  films: Films;
 };
 
-function FilmTabs({ film }: FilmTabsProps) {
+function FilmTabs({ films }: FilmTabsProps) {
+
   const [tab, setTab] = useState('Overview');
 
   const getTab = (tabFilm: string) => {
     if (tabFilm === 'Overview') {
-      return <Overview film={film} />;
+      return <Overview films={films} />;
     }
     if (tabFilm === 'Details') {
-      return <Details film={film} />;
+      return <Details films={films} />;
     }
     if (tabFilm === 'Reviews') {
       return <Reviews reviews={REVIEWS} />;

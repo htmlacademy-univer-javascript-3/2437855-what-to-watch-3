@@ -1,11 +1,16 @@
 import React from 'react';
-import { Film } from '../../../types/film';
+import { useParams } from 'react-router-dom';
+import { Films } from '../../../types/film';
 
 type DetailsProps = {
-  film: Film;
+  films: Films;
 };
 
-function Details({ film }: DetailsProps): JSX.Element {
+function Details({ films }: DetailsProps): JSX.Element {
+  const { id } = useParams();
+  const currentFilmId = Number(id);
+  const film = films.at(currentFilmId);
+
   return (
     <div className="film-card__text film-card__row">
       <div className="film-card__text-col">
