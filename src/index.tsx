@@ -2,28 +2,25 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Provider } from 'react-redux';
 
 import App from './components/app/App';
-import { Provider } from 'react-redux';
 import { store } from './store';
-import { checkAuthAction, fetchFilmsAction } from './store/api-action';
+import { fetchFilms, checkAuth, fetchMyList} from './store/api-action';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 
-store.dispatch(fetchFilmsAction());
-store.dispatch(checkAuthAction());
+store.dispatch(fetchFilms());
+store.dispatch(checkAuth());
+store.dispatch(fetchMyList());
 
 root.render(
   <React.StrictMode>
     <Provider store={store}>
       <ToastContainer />
-      <App
-        filmTitle={'The Grand Budapest Hotel'}
-        filmGenre={'Drama'}
-        filmYear={2014}
-      />
+      <App />
     </Provider>
   </React.StrictMode>,
 );
