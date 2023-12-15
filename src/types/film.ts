@@ -1,30 +1,21 @@
-import { Genre } from '../components/const';
-import { store } from '../store';
-
 export type Film = {
   id: number;
-  src: string;
-  alt: string;
-  filmName: string;
-  filmGenre: Genre;
-  filmYear: number;
-  srcPoster: string;
-  altPoster: string;
-  rating: Rating;
-  textPart1: string;
-  textPart2: string;
+  name: string;
+  posterImage: string;
+  previewImage: string;
+  backgroundImage: string;
+  backgroundColor: string;
+  videoLink: string;
+  previewVideoLink: string;
+  description: string;
+  rating: number;
+  scoresCount: number;
   director: string;
   starring: string[];
-  runTime: string;
-};
-
-export type Rating = {
-  score: number;
-  level: string;
-  count: string;
+  runTime: number;
+  genre: string;
+  released: number;
+  isFavorite: boolean;
 };
 
 export type Films = Film[];
-
-export type State = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
