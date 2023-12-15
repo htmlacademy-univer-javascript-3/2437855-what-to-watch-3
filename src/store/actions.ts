@@ -1,7 +1,7 @@
 import { createAction } from '@reduxjs/toolkit';
 import { AuthorizationStatus, Genre } from '../components/const';
 import { Film } from '../types';
-
+import { UserData } from '../types/authorization';
 
 export const Action = {
   CHANGE_GENRE: 'main/changeGenre',
@@ -10,11 +10,22 @@ export const Action = {
   RESET_SHOWN_FILMS: 'resetShownFilms',
   FILL_FILMS: 'fillFilms',
   SET_AUTH_STATUS: 'setAuthStatus',
-  SET_DATA_IS_LOADING: 'setDataIsLoading'
+  SET_DATA_IS_LOADING: 'setDataIsLoading',
+  APP_SET_ERROR: 'app/setError',
+  SAVE_USER: 'saveUser',
 };
 
-export const changeGenre = createAction(Action.CHANGE_GENRE, (genre: Genre) => ({ payload: genre }));
+export const changeGenre = createAction(
+  Action.CHANGE_GENRE,
+  (genre: Genre) => ({ payload: genre }),
+);
 export const setFilmCardCount = createAction(Action.SET_FILM_CARD_COUNT);
 export const fillFilms = createAction<Film[]>(Action.FILL_FILMS);
-export const setDataIsLoading = createAction<boolean>(Action.SET_DATA_IS_LOADING);
-export const setAuthorizationStatus = createAction<AuthorizationStatus>(Action.SET_AUTH_STATUS);
+export const setDataIsLoading = createAction<boolean>(
+  Action.SET_DATA_IS_LOADING,
+);
+export const setAuthorizationStatus = createAction<AuthorizationStatus>(
+  Action.SET_AUTH_STATUS,
+);
+export const setError = createAction<string | null>(Action.APP_SET_ERROR);
+export const saveUser = createAction<UserData>(Action.SAVE_USER);

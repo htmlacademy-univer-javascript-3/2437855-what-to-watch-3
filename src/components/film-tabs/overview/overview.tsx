@@ -1,10 +1,15 @@
-import { Film } from '../../../types/film';
+import { useParams } from 'react-router-dom';
+import { Films } from '../../../types/film';
 
 type OverviewProps = {
-  film: Film;
+  films: Films;
 };
 
-function Overview({ film }: OverviewProps): JSX.Element {
+function Overview({ films }: OverviewProps): JSX.Element {
+  const { id } = useParams();
+  const currentFilmId = Number(id);
+  const film = films.at(currentFilmId);
+
   return (
     <>
       <div className="film-rating">

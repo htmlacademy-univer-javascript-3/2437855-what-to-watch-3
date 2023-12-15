@@ -10,6 +10,7 @@ import PlayerPage from '../../pages/player-page/player-page';
 import Error404 from '../../pages/error-page/error404';
 import { useAppSelector } from '../../hook/useAppDispatch';
 import { Loader } from '../loader/loader';
+import PrivateRoute from '../privateRoute-page/priveteRoute-page';
 
 type AppProps = {
   filmTitle: string;
@@ -33,7 +34,11 @@ function App(props: AppProps): JSX.Element {
           <Route path={AppRoute.SignIn} element={<SignInPage />} />
           <Route
             path={AppRoute.MyList}
-            element={<MyListPage films={films} />}
+            element={
+              <PrivateRoute>
+                <MyListPage films={films} />
+              </PrivateRoute>
+            }
           />
           <Route path={AppRoute.Film} element={<MoviePage films={films} />} />
           <Route
