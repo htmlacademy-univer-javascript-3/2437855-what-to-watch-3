@@ -8,18 +8,19 @@ export const AppRoute = {
   Error: '/*',
 };
 
+export enum NameSpace {
+  Auth = 'AUTH',
+  Film = 'FILM',
+  Main = 'MAIN',
+  MyList = 'MYLIST'
+}
+
 export enum APIRoute {
   Films = '/films',
   Login = '/login',
   Logout = '/logout',
   Reviews = '/comments',
   SimilarFilms = '/similar',
-}
-
-export enum AuthorizationStatus {
-  Auth = 'AUTH',
-  NoAuth = 'NO_AUTH',
-  Unknown = 'UNKNOWN',
 }
 
 export enum Genre {
