@@ -1,51 +1,58 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type VideoPlayerProps = {
   isPlaying: boolean;
+  isMuting: boolean;
   src: string;
   poster: string;
 };
 
-const VIDEO_TIMEOUT = 1000;
-
 function VideoPlayer({
   isPlaying,
+  isMuting,
   src,
   poster,
 }: VideoPlayerProps): JSX.Element {
   const [isLoaded, setIsLoaded] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
+  const handleDataLoaded = () => {
+    setIsLoaded(true);
+  };
+
   useEffect(() => {
-    if (!isPlaying) {
+    const playerElement = videoRef.current;
+
+    if (!playerElement) {
       return;
     }
 
-    const interval = setInterval(() => {
-      setIsLoaded(true);
-    }, VIDEO_TIMEOUT);
+    playerElement.addEventListener('loadeddata', handleDataLoaded);
 
     return () => {
-      clearInterval(interval);
-      setIsLoaded(false);
+      playerElement.removeEventListener('loadeddata', handleDataLoaded);
     };
-  }, [isPlaying]);
+  }, []);
 
   useEffect(() => {
-    if (videoRef.current) {
-      if (isLoaded) {
-        videoRef.current?.play();
-      } else {
-        videoRef.current?.load();
-      }
+    const playerElement = videoRef.current;
+
+    if (!isLoaded || !playerElement) {
+      return;
     }
-  }, [isLoaded]);
+
+    if (isPlaying) {
+      playerElement.play();
+      return;
+    }
+
+    playerElement.pause();
+  }, [isPlaying, isLoaded]);
 
   return (
     <video
-      width="280px"
-      height="175px"
-      muted
+      className="video"
+      muted={isMuting}
       ref={videoRef}
       src={src}
       poster={poster}

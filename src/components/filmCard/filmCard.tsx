@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 import { Film } from '../../types/film';
 import VideoPlayer from '../video-player/VideoPlayer';
-import { AppRoute } from '../const';
 import './filmCard.css';
 
 export type FilmCardProps = {
@@ -15,9 +14,15 @@ function FilmCard({ film }: FilmCardProps): JSX.Element {
   const [needToActiveVideo, setNeedToActiveVideo] = useState(false);
 
   useEffect(() => {
+    let isMounted = true;
+
     if (needToActiveVideo) {
-      setIsPlaying(true);
+      setTimeout(() => isMounted && setIsPlaying(true), 1000);
     }
+
+    return () => {
+      isMounted = false;
+    };
   }, [needToActiveVideo]);
 
   return (
@@ -29,15 +34,16 @@ function FilmCard({ film }: FilmCardProps): JSX.Element {
         setIsPlaying(false);
       }}
     >
-      <Link className="small-film-card__link" to={AppRoute.Film}>
+      <Link className="small-film-card__link" to={`/films/${film.id}`}>
         <div className="small-film-card__image">
           {!isPlaying ? (
             <img src={film.previewImage} alt={film.name} />
           ) : (
             <VideoPlayer
               isPlaying={isPlaying}
-              src={film.previewImage}
-              poster={film.name}
+              isMuting
+              src={film.previewVideoLink}
+              poster={film.previewImage}
             />
           )}
         </div>

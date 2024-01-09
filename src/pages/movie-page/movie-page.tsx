@@ -20,8 +20,7 @@ import {
 } from '../../store/film-reducer/film-selector';
 import FilmCardDescription from '../../components/filmCardDescription/filmCardDescription';
 import { AuthorizationStatus } from '../../types/authorization';
-import ShowMore from '../../components/show-more/show-more';
-
+import { Loader } from '../../components/loader/loader';
 
 function MoviePage(): JSX.Element {
   const params = useParams();
@@ -46,20 +45,19 @@ function MoviePage(): JSX.Element {
       {film && (
         <section className="film-card film-card--full">
           <div className="film-card__hero">
-            props.backgroundImgSrc ?
-            <div className="film-card__bg">
-              <img src={film.backgroundImage} alt={film.name} />
-            </div>{' '}
-            :
-            <div
-              className="film-card__bg"
-              data-testid="film-card-background-color"
-              style={{ backgroundColor: film.backgroundColor }}
-            />
+            {film.backgroundImage ? (
+              <div className="film-card__bg">
+                <img src={film.backgroundImage} alt={film.name} />
+              </div>
+            ) : (
+              <div
+                className="film-card__bg"
+                style={{ backgroundColor: film.backgroundColor }}
+              />
+            )}
             <h1 className="visually-hidden">WTW</h1>
             <header className="page-header film-card__head">
               <Logo isLight={false} />
-
               <User />
             </header>
             <div className="film-card__wrap">
@@ -68,7 +66,6 @@ function MoviePage(): JSX.Element {
                   <Link
                     to={`/films/${film.id}/review`}
                     className="btn film-card__button"
-                    data-testid="add-review-link"
                   >
                     Add review
                   </Link>
@@ -88,7 +85,7 @@ function MoviePage(): JSX.Element {
                 />
               </div>
 
-              <FilmTabs />
+              <FilmTabs filmInfo={film} />
             </div>
           </div>
         </section>
@@ -98,12 +95,12 @@ function MoviePage(): JSX.Element {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
           {similarFilmsLoaded && film ? (
-            <div className="catalog__films-list">
-              <FilmsList films={similarFilms} />
-              <ShowMore />
-            </div>
+            <FilmsList
+              films={similarFilms}
+              genre={film.genre || 'All Genres'}
+            />
           ) : (
-            <ShowMore />
+            <Loader />
           )}
         </section>
         <Footer />

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import Rating from '../rating/rating';
 
 import { useAppDispatch, useAppSelector } from '../../hook/useAppDispatch';
 import { postReview } from '../../store/api-action';
 import { getPostReviewError } from '../../store/film-reducer/film-selector';
 import { setPostReviewError } from '../../store/film-reducer/film-reducer';
+import Rating from '../rating/rating';
 
 function generateRatingList(min: number, max: number): number[] {
   return Array.from({ length: max - min + 1 }, (_, i) => max - i);
@@ -66,14 +66,20 @@ function CommentForm({ filmId }: { filmId: number }): JSX.Element {
             name="review-text"
             id="review-text"
             placeholder="Review text"
+            minLength={50}
+            maxLength={400}
             defaultValue={''}
           />
           <div className="add-review__submit">
-            {
-              formData.rating !== -1 && formData.reviewText.length >= 50 ?
-                <button className="add-review__btn" type="submit">Post</button> :
-                <button className="add-review__btn" type="submit" disabled>Post</button>
-            }
+            {formData.rating !== -1 && formData.reviewText.length >= 50 ? (
+              <button className="add-review__btn" type="submit">
+                Post
+              </button>
+            ) : (
+              <button className="add-review__btn" type="submit" disabled>
+                Post
+              </button>
+            )}
           </div>
         </div>
       </form>

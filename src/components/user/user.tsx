@@ -2,11 +2,11 @@ import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
 import { logout } from '../../store/api-action';
-import { useAppDispatch, useAppSelector } from '../../hook/useAppDispatch';
-import { AppRoute } from '../const';
 import { getAuthStatus, getUser } from '../../store/user-reducer/user-selector';
 import { redirectToRoute } from '../../store/actions';
 import { AuthorizationStatus } from '../../types/authorization';
+import { useAppDispatch, useAppSelector } from '../../hook/useAppDispatch';
+import { AppRoute } from '../const';
 
 function User(): JSX.Element | null {
   const userData = useAppSelector(getUser);

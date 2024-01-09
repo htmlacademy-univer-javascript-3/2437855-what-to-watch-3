@@ -1,5 +1,6 @@
-import { FilmData } from '../../types/state';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+import { FilmData } from '../../types/state';
 import { AppRoute, NameSpace } from '../../components/const';
 import {
   fetchFilm,

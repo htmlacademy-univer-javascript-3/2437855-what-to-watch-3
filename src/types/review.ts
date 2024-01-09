@@ -9,9 +9,5 @@ export type Review = {
   rating: number;
   filmId?: number;
 };
-export type UserReview = {
-  filmId: string;
-  rating: number;
-  comment: string;
-};
+
 

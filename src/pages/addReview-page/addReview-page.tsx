@@ -1,4 +1,4 @@
-import {Link, Navigate} from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
 import Logo from '../../components/logo/logo';
@@ -29,12 +29,15 @@ function AddReviewPage(): JSX.Element {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to="film-page.html" className="breadcrumbs__link">
+                <Link to={`/films/${film.id}`} className="breadcrumbs__link">
                   {film.name}
                 </Link>
               </li>
               <li className="breadcrumbs__item">
-                <Link to={AppRoute.AddReview} className="breadcrumbs__link">
+                <Link
+                  to={`/films/${film.id}/review`}
+                  className="breadcrumbs__link"
+                >
                   Add review
                 </Link>
               </li>
@@ -54,7 +57,7 @@ function AddReviewPage(): JSX.Element {
         </div>
       </div>
 
-      <CommentForm filmId={film.id}/>
+      <CommentForm filmId={film.id} />
     </section>
   ) : (
     <Navigate to={AppRoute.Error} />

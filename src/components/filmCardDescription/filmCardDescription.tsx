@@ -9,9 +9,9 @@ import {
 } from '../../store/myList-reducer/myList-selector';
 import { getAuthStatus } from '../../store/user-reducer/user-selector';
 import { redirectToRoute } from '../../store/actions';
-import { AppRoute } from '../const';
 import { changeFilmStatus, fetchMyList } from '../../store/api-action';
 import { AuthorizationStatus } from '../../types/authorization';
+import { AppRoute } from '../const';
 
 type FilmCardDescriptionProps = PropsWithChildren<{
   filmInfo: Film;
@@ -66,33 +66,24 @@ function FilmCardDescription(props: FilmCardDescriptionProps) {
 
         <button
           className="btn btn--list film-card__button"
-          type="button"
           onClick={changeStatus}
-          data-testid="add-to-my-list-button"
         >
-          {
-            <>
-              {isInList ? (
-                <svg viewBox="0 0 18 14" width="18" height="14">
-                  <use xlinkHref="#in-list" />
-                </svg>
-              ) : (
-                <svg viewBox="0 0 19 20" width="19" height="20">
-                  <use xlinkHref="#add" />
-                </svg>
-              )}
-              <span>My list</span>
-              <span className="film-card__count" data-testid="my-list-count">
-                {myListLength}
-              </span>
-            </>
-          }
+          {props.filmInfo?.isFavorite ? (
+            <svg viewBox="0 0 18 14" width="18" height="14">
+              <use xlinkHref="#in-list" />
+            </svg>
+          ) : (
+            <svg viewBox="0 0 19 20" width="19" height="20">
+              <use xlinkHref="#add" />
+            </svg>
+          )}
+          <span>My list</span>
+          <span className="film-card__count">{myListLength}</span>
         </button>
-
         {props.children}
       </div>
     </div>
   );
 }
 
-export default React.memo(FilmCardDescription);
+export default FilmCardDescription;

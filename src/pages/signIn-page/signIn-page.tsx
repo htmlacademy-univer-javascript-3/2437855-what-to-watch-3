@@ -1,5 +1,5 @@
-import { FormEvent, useMemo, useRef, useState } from 'react';
-import {Navigate} from 'react-router-dom';
+import React, { useMemo, useRef, useState } from 'react';
+import { Navigate } from 'react-router-dom';
 
 import Logo from '../../components/logo/logo';
 import Footer from '../../components/footer/footer';
@@ -13,25 +13,32 @@ import {
 } from '../../store/user-reducer/user-selector';
 
 function SignInPage(): JSX.Element {
+  const dispatch = useAppDispatch();
+
   const [emailField, setEmailField] = useState<string>('');
   const [passwordField, setPasswordField] = useState<string>('');
-
-  const dispatch = useAppDispatch();
 
   const authStatus = useAppSelector(getAuthStatus);
   const loginError = useAppSelector(getLoginError);
   const formRef = useRef(null);
 
-  const isValidPassword = (password: string) =>
-    /[a-zA-Z]/.test(password) && /\d/.test(password);
+  const RE_PASSWORD = /(?=.*[0-9])(?=.*[a-zA-Z])[0-9a-zA-Z]{2,}/;
+  const RE_EMAIL = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
-  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
+    const isValidEmail = () =>
+      emailField === null || !RE_EMAIL.test(emailField);
+    const isValidPassword = () =>
+      passwordField === null || !RE_PASSWORD.test(passwordField);
+
     if (formRef.current) {
-      if (emailField) {
+      if (isValidEmail() && isValidPassword()) {
+        dispatch(setLoginError(LogInError.NotValidEmailAndPasswordCombination));
+      } else if (isValidEmail()) {
         dispatch(setLoginError(LogInError.NotValidEmail));
-      } else if (passwordField || !isValidPassword(passwordField.toString())) {
+      } else if (isValidPassword()) {
         dispatch(setLoginError(LogInError.NotValidPassword));
       } else {
         dispatch(login({ email: emailField, password: passwordField }));
@@ -70,7 +77,12 @@ function SignInPage(): JSX.Element {
       </header>
 
       <div className="sign-in user-page__content">
-        <form action="#" className="sign-in__form" ref={formRef} onSubmit={handleSubmit}>
+        <form
+          action="#"
+          className="sign-in__form"
+          ref={formRef}
+          onSubmit={handleSubmit}
+        >
           {errorMessage}
           <div className="sign-in__fields">
             <div className="sign-in__field">

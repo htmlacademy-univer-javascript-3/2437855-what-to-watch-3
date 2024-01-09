@@ -1,6 +1,7 @@
+import { useMemo, useState } from 'react';
+
 import { Films } from '../../types/film';
 import FilmCard from '../filmCard/filmCard';
-import { useMemo, useState } from 'react';
 
 type FilmsListProps = {
   films: Films;
