@@ -1,29 +1,43 @@
-import { useAppSelector } from '../../../hook/useAppDispatch';
+import { Film } from '../../../types/film';
+import { useMemo } from 'react';
 
-function Overview(): JSX.Element {
-  const film = useAppSelector((state) => state.film);
-
+function Overview({ filmInfo }: { filmInfo: Film }): JSX.Element {
+  const getScore = (rating: number) => {
+    if (0 <= rating && rating < 3) {
+      return 'Bad';
+    } else if (3 <= rating && rating < 5) {
+      return 'Normal';
+    } else if (5 <= rating && rating < 8) {
+      return 'Good';
+    } else if (8 <= rating && rating < 10) {
+      return 'Very good';
+    } else {
+      return 'Awecome';
+    }
+  };
+  const score = useMemo(() => getScore(filmInfo.rating), [filmInfo.rating]);
   return (
     <>
       <div className="film-rating">
-        <div className="film-rating__score">{film.rating.score}</div>
+        <div className="film-rating__score">{filmInfo.rating}</div>
         <p className="film-rating__meta">
-          <span className="film-rating__level">{film.rating.level}</span>
-          <span className="film-rating__count">{film.rating.count}</span>
+          <span className="film-rating__level">{score}</span>
+          <span className="film-rating__count">
+            {`${filmInfo.scoresCount} ${
+              filmInfo.scoresCount === 1 ? 'rating' : 'ratings'
+            }`}
+          </span>
         </p>
       </div>
 
       <div className="film-card__text">
-        <p>{film.textPart1}</p>
-
-        <p>{film.textPart2}</p>
-
+        <p>{filmInfo.description}</p>
         <p className="film-card__director">
-          <strong>Director: {film.director}</strong>
+          <strong>Director: {filmInfo.director}</strong>
         </p>
 
         <p className="film-card__starring">
-          <strong>Starring: {film.starring}</strong>
+          <strong>Starring: {filmInfo.starring.join(', ')} and other</strong>
         </p>
       </div>
     </>

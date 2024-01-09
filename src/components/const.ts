@@ -12,7 +12,7 @@ export enum NameSpace {
   Auth = 'AUTH',
   Film = 'FILM',
   Main = 'MAIN',
-  MyList = 'MYLIST'
+  MyList = 'MYLIST',
 }
 
 export enum APIRoute {
@@ -33,5 +33,5 @@ export enum Genre {
   KidsFamily = 'Kids & Family',
   Romance = 'Romance',
   SciFi = 'Sci-Fi',
-  Thriller = 'Thriller'
+  Thriller = 'Thriller',
 }

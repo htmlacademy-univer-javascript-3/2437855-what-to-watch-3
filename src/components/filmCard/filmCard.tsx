@@ -29,22 +29,20 @@ function FilmCard({ film }: FilmCardProps): JSX.Element {
         setIsPlaying(false);
       }}
     >
-      <div className="small-film-card__image">
-        {!isPlaying ? (
-          <img src={film.srcPoster} alt={film.filmName}/>
-        ) : (
-          <VideoPlayer
-            isPlaying={isPlaying}
-            src={film.src}
-            poster={film.srcPoster}
-          />
-        )}
-      </div>
-      <h3 className="small-film-card__title">
-        <Link className="small-film-card__link" to={AppRoute.Film}>
-          {film.filmName}
-        </Link>
-      </h3>
+      <Link className="small-film-card__link" to={AppRoute.Film}>
+        <div className="small-film-card__image">
+          {!isPlaying ? (
+            <img src={film.previewImage} alt={film.name} />
+          ) : (
+            <VideoPlayer
+              isPlaying={isPlaying}
+              src={film.previewImage}
+              poster={film.name}
+            />
+          )}
+        </div>
+        <h3 className="small-film-card__title">{film.name}</h3>
+      </Link>
     </article>
   );
 }

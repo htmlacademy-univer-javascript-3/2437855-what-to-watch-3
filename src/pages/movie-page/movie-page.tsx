@@ -3,116 +3,108 @@ import { Link, useParams } from 'react-router-dom';
 
 import Logo from '../../components/logo/logo';
 import Footer from '../../components/footer/footer';
-import { Films } from '../../types/film';
-import { AuthorizationStatus } from '../../components/const';
 import FilmTabs from '../../components/film-tabs/film-tabs';
 import User from '../../components/user/user';
 import { useAppDispatch, useAppSelector } from '../../hook/useAppDispatch';
-import { setDataIsLoading } from '../../store/actions';
 import {
-  fetchFilmByID,
-  fetchReviewsByID,
-  fetchSimilarByID,
+  fetchFilm,
+  fetchReviews,
+  fetchSimilarFilms,
 } from '../../store/api-action';
 import FilmsList from '../../components/filmList/filmList';
+import { getAuthStatus } from '../../store/user-reducer/user-selector';
+import {
+  getFilm,
+  getSimilarFilms,
+  getSimilarFilmsLoaded,
+} from '../../store/film-reducer/film-selector';
+import FilmCardDescription from '../../components/filmCardDescription/filmCardDescription';
+import { AuthorizationStatus } from '../../types/authorization';
+import ShowMore from '../../components/show-more/show-more';
 
 
 function MoviePage(): JSX.Element {
-  const { id } = useParams();
+  const params = useParams();
+  const filmId = params.id;
+
   const dispatch = useAppDispatch();
-  const film = useAppSelector((state) => state.film);
-  const similarFilms = useAppSelector((state) => state.similarFilms);
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus,
-  );
+  const film = useAppSelector(getFilm);
+  const similarFilms = useAppSelector(getSimilarFilms);
+  const similarFilmsLoaded = useAppSelector(getSimilarFilmsLoaded);
+  const authorizationStatus = useAppSelector(getAuthStatus);
 
   useEffect(() => {
-    dispatch(setDataIsLoading(true));
-    dispatch(fetchFilmByID(String(id)));
-    dispatch(fetchSimilarByID(String(id)));
-    dispatch(fetchReviewsByID(String(id)));
-    dispatch(setDataIsLoading(false));
-  }, [id, dispatch]);
+    if (filmId !== undefined) {
+      dispatch(fetchFilm(filmId));
+      dispatch(fetchSimilarFilms(filmId));
+      dispatch(fetchReviews(filmId));
+    }
+  }, [dispatch, filmId]);
+
   return (
     <>
-      <section className="film-card film-card--full">
-        <div className="film-card__hero">
-          <div className="film-card__bg">
-            <img src={film.src} alt={film.alt} />
-          </div>
+      {film && (
+        <section className="film-card film-card--full">
+          <div className="film-card__hero">
+            props.backgroundImgSrc ?
+            <div className="film-card__bg">
+              <img src={film.backgroundImage} alt={film.name} />
+            </div>{' '}
+            :
+            <div
+              className="film-card__bg"
+              data-testid="film-card-background-color"
+              style={{ backgroundColor: film.backgroundColor }}
+            />
+            <h1 className="visually-hidden">WTW</h1>
+            <header className="page-header film-card__head">
+              <Logo isLight={false} />
 
-          <h1 className="visually-hidden">WTW</h1>
-
-          <header className="page-header film-card__head">
-            <Logo isLight={false} />
-
-            <User />
-          </header>
-
-          <div className="film-card__wrap">
-            <div className="film-card__desc">
-              <h2 className="film-card__title">{film.filmName}</h2>
-              <p className="film-card__meta">
-                <span className="film-card__genre">{film.filmGenre}</span>
-                <span className="film-card__year">{film.filmYear}</span>
-              </p>
-
-              <div className="film-card__buttons">
-                <button
-                  className="btn btn--play film-card__button"
-                  type="button"
-                >
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
-                <button
-                  className="btn btn--list film-card__button"
-                  type="button"
-                >
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                  <span className="film-card__count">9</span>
-                </button>
+              <User />
+            </header>
+            <div className="film-card__wrap">
+              <FilmCardDescription filmInfo={film}>
                 {authorizationStatus === AuthorizationStatus.Auth && (
                   <Link
                     to={`/films/${film.id}/review`}
                     className="btn film-card__button"
+                    data-testid="add-review-link"
                   >
                     Add review
                   </Link>
                 )}
+              </FilmCardDescription>
+            </div>
+          </div>
+
+          <div className="film-card__wrap film-card__translate-top">
+            <div className="film-card__info">
+              <div className="film-card__poster film-card__poster--big">
+                <img
+                  src={film.posterImage}
+                  alt={film.name}
+                  width="218"
+                  height="327"
+                />
               </div>
+
+              <FilmTabs />
             </div>
           </div>
-        </div>
-
-        <div className="film-card__wrap film-card__translate-top">
-          <div className="film-card__info">
-            <div className="film-card__poster film-card__poster--big">
-              <img
-                src={film.srcPoster}
-                alt={film.altPoster}
-                width="218"
-                height="327"
-              />
-            </div>
-
-            <FilmTabs />
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-
-          <div className="catalog__films-list">
-            <FilmsList films={similarFilms} />
-          </div>
+          {similarFilmsLoaded && film ? (
+            <div className="catalog__films-list">
+              <FilmsList films={similarFilms} />
+              <ShowMore />
+            </div>
+          ) : (
+            <ShowMore />
+          )}
         </section>
         <Footer />
       </div>

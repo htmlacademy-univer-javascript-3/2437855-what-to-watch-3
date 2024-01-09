@@ -15,4 +15,3 @@ export type UserReview = {
   comment: string;
 };
 
-export type Reviews = Review[];

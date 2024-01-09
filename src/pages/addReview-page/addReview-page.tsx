@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom';
+import {Link, Navigate} from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
 import Logo from '../../components/logo/logo';
@@ -6,18 +6,19 @@ import { AppRoute } from '../../components/const';
 import CommentForm from '../../components/commentForm/commentForm';
 import User from '../../components/user/user';
 import { useAppSelector } from '../../hook/useAppDispatch';
+import { getFilm } from '../../store/film-reducer/film-selector';
 
 function AddReviewPage(): JSX.Element {
-  const film = useAppSelector((state) => state.film);
+  const film = useAppSelector(getFilm);
 
-  return (
+  return film ? (
     <section className="film-card film-card--full">
       <Helmet>
         <title>Add Review</title>
       </Helmet>
       <div className="film-card__header">
         <div className="film-card__bg">
-          <img src={film.src} alt={film.alt} />
+          <img src={film.backgroundImage} alt={film.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -29,7 +30,7 @@ function AddReviewPage(): JSX.Element {
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
                 <Link to="film-page.html" className="breadcrumbs__link">
-                  {film.filmName}
+                  {film.name}
                 </Link>
               </li>
               <li className="breadcrumbs__item">
@@ -45,16 +46,18 @@ function AddReviewPage(): JSX.Element {
 
         <div className="film-card__poster film-card__poster--small">
           <img
-            src={film.srcPoster}
-            alt={film.altPoster}
+            src={film.posterImage}
+            alt={film.name}
             width="218"
             height="327"
           />
         </div>
       </div>
 
-      <CommentForm />
+      <CommentForm filmId={film.id}/>
     </section>
+  ) : (
+    <Navigate to={AppRoute.Error} />
   );
 }
 
