@@ -1,5 +1,4 @@
 import { Navigate } from 'react-router-dom';
-
 import { AppRoute } from '../const';
 import { useAppSelector } from '../../hook/useAppDispatch';
 import { getAuthStatus } from '../../store/user-reducer/user-selector';
