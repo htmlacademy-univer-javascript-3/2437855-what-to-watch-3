@@ -1,41 +1,70 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
-import { logOutAction } from '../../store/api-action';
+import { logout } from '../../store/api-action';
+import { getAuthStatus, getUser } from '../../store/user-reducer/user-selector';
+import { redirectToRoute } from '../../store/actions';
+import { AuthorizationStatus } from '../../types/authorization';
 import { useAppDispatch, useAppSelector } from '../../hook/useAppDispatch';
-import { AuthorizationStatus } from '../const';
+import { AppRoute } from '../const';
 
-function User(): JSX.Element {
-  const userData = useAppSelector((state) => state.userData);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+function User(): JSX.Element | null {
+  const userData = useAppSelector(getUser);
+  const authorizationStatus = useAppSelector(getAuthStatus);
   const dispatch = useAppDispatch();
 
-  const signOutClickHandler = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    dispatch(logOutAction());
-  };
-
-  if (authorizationStatus !== AuthorizationStatus.Auth) {
-    return (
-      <ul className="user-block">
-        <li className="user-block__item">
-          <Link to='/login' className='user-block__link'>Sign in</Link>
-        </li>
-      </ul>
-    );
+  function getUserBlock(authStatus: AuthorizationStatus) {
+    switch (authStatus) {
+      case AuthorizationStatus.Auth:
+        return (
+          <>
+            <li className="user-block__item">
+              <div
+                className="user-block__avatar"
+                onClick={() => {
+                  dispatch(redirectToRoute(AppRoute.MyList));
+                }}
+              >
+                <img
+                  src={userData?.avatarUrl}
+                  alt="User avatar"
+                  width="63"
+                  height="63"
+                />
+              </div>
+            </li>
+            <li className="user-block__item">
+              <button
+                onClick={() => {
+                  dispatch(logout());
+                }}
+                className="user-block__link"
+                style={{ background: 'transparent', border: 'none' }}
+              >
+                Sign out
+              </button>
+            </li>
+          </>
+        );
+      case AuthorizationStatus.NoAuth:
+        return (
+          <li className="user-block__item">
+            <Link to={AppRoute.SignIn} className="user-block__link">
+              Sign in
+            </Link>
+          </li>
+        );
+      case AuthorizationStatus.Unknown:
+        return null;
+    }
   }
-  return (
-    <ul className="user-block">
-      <li className="user-block__item">
-        <div className="user-block__avatar">
-          <img src={userData?.avatarUrl} alt="User avatar" width="63" height="63" />
-        </div>
-      </li>
-      <li className="user-block__item">
-        <a className="user-block__link" onClick={signOutClickHandler}>Sign out</a>
-      </li>
-    </ul>
+
+  const userBlock = useMemo(
+    () => getUserBlock(authorizationStatus),
+    [authorizationStatus],
   );
+
+  return <ul className="user-block">{userBlock}</ul>;
 }
 
 export default User;

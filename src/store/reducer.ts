@@ -1,5 +1,6 @@
-import { NameSpace } from '../components/const';
 import { combineReducers } from '@reduxjs/toolkit';
+
+import { NameSpace } from '../components/const';
 import { filmData } from './film-reducer/film-reducer';
 import { mainData } from './main-reducer/main-reducer';
 import { authProcess } from './user-reducer/user-reducer';

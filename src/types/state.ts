@@ -1,35 +1,37 @@
 import { store } from '../store';
 import User from '../components/user/user';
-import { Reviews } from './review';
+import { Review } from './review';
+import { Film, Films } from './film';
+import { AuthorizationStatus, LogInError } from './authorization';
 
 export type State = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch;
 
 export type AuthProcess = {
-  authorizationStatus: AuthStatus;
+  authorizationStatus: AuthorizationStatus;
   user: User | null;
   loginError: LogInError;
 };
 
 export type FilmData = {
-  film: FilmInfo | null;
-  similarFilms: FilmInfo[];
-  reviews: Reviews;
+  film: Film | null;
+  similarFilms: Films;
+  reviews: Review[];
   postReviewError: string | null;
   similarFilmsLoaded: boolean;
 };
 
 export type MainData = {
-  films: FilmInfo[];
-  promoFilm: FilmInfo | null;
+  films: Films;
+  promoFilm: Film | null;
   genres: string[];
   selectedGenre: string;
   isLoading: boolean;
 };
 
 export type MyListData = {
-  myList: FilmInfo[];
+  myList: Films;
   myListLength: number;
   changedFilm: {
     filmId: number;

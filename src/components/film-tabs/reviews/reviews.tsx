@@ -1,11 +1,11 @@
 import ReviewItem from './review-item';
-import { ReviewArray } from '../../../types/review';
+import { useAppSelector } from '../../../hook/useAppDispatch';
+import { getReviews } from '../../../store/film-reducer/film-selector';
+import { Review } from '../../../types/review';
 
-type ReviewsProps = {
-  reviews: ReviewArray;
-};
+function Reviews() {
+  const reviews = useAppSelector<Review[]>(getReviews);
 
-function Reviews({ reviews }: ReviewsProps) {
   return (
     <div className="film-card__reviews film-card__row">
       <div className="film-card__reviews-col">

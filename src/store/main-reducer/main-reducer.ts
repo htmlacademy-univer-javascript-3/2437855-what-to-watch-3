@@ -1,5 +1,6 @@
-import { MainData } from '../../types/state';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+import { MainData } from '../../types/state';
 import { NameSpace } from '../../components/const';
 import { fetchFilms, fetchPromoFilm } from '../api-action';
 import { Films } from '../../types/film';

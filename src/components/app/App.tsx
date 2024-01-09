@@ -8,7 +8,7 @@ import MoviePage from '../../pages/movie-page/movie-page';
 import AddReviewPage from '../../pages/addReview-page/addReview-page';
 import PlayerPage from '../../pages/player-page/player-page';
 import Error404 from '../../pages/error-page/error404';
-import PrivateRoute from '../privateRoute-page/priveteRoute-page';
+import PrivateRoute from '../privateRoute/priveteRoute';
 import { AppRoute } from '../const';
 
 function App(): JSX.Element {

@@ -1,9 +1,10 @@
-import { ChangeEvent, FormEvent, useRef, useState } from 'react';
-import Rating from '../rating/rating';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../hook/useAppDispatch';
 import { postReview } from '../../store/api-action';
+import { getPostReviewError } from '../../store/film-reducer/film-selector';
+import { setPostReviewError } from '../../store/film-reducer/film-reducer';
+import Rating from '../rating/rating';
 
 function generateRatingList(min: number, max: number): number[] {
   return Array.from({ length: max - min + 1 }, (_, i) => max - i);
@@ -14,64 +15,71 @@ const MAX = 10;
 
 const ratingList = generateRatingList(MIN, MAX);
 
-function CommentForm(): JSX.Element {
-  const [text, setText] = useState('');
-  const commentRef = useRef<HTMLTextAreaElement>(null);
-  const navigate = useNavigate();
-  const film = useAppSelector((state) => state.film);
-  const [filmRating, setFilmRating] = useState(0);
+function CommentForm({ filmId }: { filmId: number }): JSX.Element {
   const dispatch = useAppDispatch();
+  const postReviewError = useAppSelector(getPostReviewError);
+  const [formData, setFormData] = useState({
+    rating: -1,
+    reviewText: '',
+  });
 
-  const doOnSubmit = (rating: number, comment: string) => {
-    dispatch(postReview({ filmId: film.id, rating, comment }));
-    navigate(`/films/${film.id}`);
+  const onChange = (
+    evt:
+      | React.ChangeEvent<HTMLTextAreaElement>
+      | React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const { name, value } = evt.target;
+    setFormData({ ...formData, [name]: value });
+    dispatch(setPostReviewError(null));
   };
 
-  const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
+  const onSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    if (filmRating && commentRef.current?.value) {
-      doOnSubmit(filmRating, commentRef.current.value);
-    }
-  };
-
-  const handleInputChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    setFilmRating(Number(evt.target.value));
+    dispatch(
+      postReview({
+        filmId: filmId,
+        comment: formData.reviewText,
+        rating: formData.rating,
+      }),
+    );
   };
 
   return (
     <div className="add-review">
-      <form action="#" className="add-review__form" onSubmit={handleFormSubmit}>
+      <form className="add-review__form" onSubmit={onSubmit}>
+        {postReviewError && (
+          <p style={{ textAlign: 'center', color: 'darkred' }}>
+            {postReviewError}
+          </p>
+        )}
         <div className="rating">
           <div className="rating__stars">
             {ratingList.map((value) => (
-              <Rating key={value} num={value} onChange={handleInputChange} />
+              <Rating key={value} num={value} onChange={onChange} />
             ))}
           </div>
         </div>
         <div className="add-review__text">
           <textarea
-            value={text}
-            onChange={(e) => setText(e.target.value)}
+            onChange={onChange}
             className="add-review__textarea"
             name="review-text"
             id="review-text"
             placeholder="Review text"
+            minLength={50}
+            maxLength={400}
             defaultValue={''}
-            ref={commentRef}
           />
           <div className="add-review__submit">
-            <button
-              className="add-review__btn"
-              type="submit"
-              disabled={
-                !filmRating ||
-                !commentRef.current?.value ||
-                commentRef.current?.value.length < 50 ||
-                commentRef.current?.value.length > 400
-              }
-            >
-              Post
-            </button>
+            {formData.rating !== -1 && formData.reviewText.length >= 50 ? (
+              <button className="add-review__btn" type="submit">
+                Post
+              </button>
+            ) : (
+              <button className="add-review__btn" type="submit" disabled>
+                Post
+              </button>
+            )}
           </div>
         </div>
       </form>
