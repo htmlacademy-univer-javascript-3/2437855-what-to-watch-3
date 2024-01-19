@@ -1,18 +1,29 @@
-import { Film } from '../../../types/film';
 import { useMemo } from 'react';
+
+import { Film } from '../../../types/film';
+import { ScoreRating } from '../../const';
 
 function Overview({ filmInfo }: { filmInfo: Film }): JSX.Element {
   const getScore = (rating: number) => {
-    if (0 <= rating && rating < 3) {
+    if (ScoreRating.Bad_min <= rating && rating < ScoreRating.Bad_max) {
       return 'Bad';
-    } else if (3 <= rating && rating < 5) {
+    } else if (
+      ScoreRating.Normal_min <= rating &&
+      rating < ScoreRating.Normal_max
+    ) {
       return 'Normal';
-    } else if (5 <= rating && rating < 8) {
+    } else if (
+      ScoreRating.Good_min <= rating &&
+      rating < ScoreRating.Good_max
+    ) {
       return 'Good';
-    } else if (8 <= rating && rating < 10) {
+    } else if (
+      ScoreRating.VeryGood_min <= rating &&
+      rating < ScoreRating.VeryGood_max
+    ) {
       return 'Very good';
     } else {
-      return 'Awecome';
+      return 'Awesome';
     }
   };
   const score = useMemo(() => getScore(filmInfo.rating), [filmInfo.rating]);

@@ -4,7 +4,7 @@ import { AxiosInstance } from 'axios';
 import { AppDispatch, State } from '../types/state';
 import { Film, Films } from '../types/film';
 import { UserData, UserAuthData } from '../types/authorization';
-import { Review } from '../types/Review';
+import { Review } from '../types/review';
 import { dropToken, saveToken } from '../services/token';
 import { redirectToRoute } from './actions';
 import { setGenres } from './main-reducer/main-reducer';

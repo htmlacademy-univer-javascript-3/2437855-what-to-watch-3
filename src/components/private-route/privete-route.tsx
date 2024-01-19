@@ -1,6 +1,7 @@
 import { Navigate } from 'react-router-dom';
+
 import { AppRoute } from '../const';
-import { useAppSelector } from '../../hook/useAppDispatch';
+import { useAppSelector } from '../../hook/hook';
 import { getAuthStatus } from '../../store/user-reducer/user-selector';
 import { AuthorizationStatus } from '../../types/authorization';
 

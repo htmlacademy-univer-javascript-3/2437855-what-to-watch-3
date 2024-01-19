@@ -1,5 +1,5 @@
 import ReviewItem from './review-item';
-import { useAppSelector } from '../../../hook/useAppDispatch';
+import { useAppSelector } from '../../../hook/hook';
 import { getReviews } from '../../../store/film-reducer/film-selector';
 import { Review } from '../../../types/review';
 

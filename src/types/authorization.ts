@@ -13,7 +13,7 @@ export type UserData = {
 export enum AuthorizationStatus {
   NoAuth,
   Auth,
-  Unknown,
+  Unknown
 }
 
 export enum LogInError {

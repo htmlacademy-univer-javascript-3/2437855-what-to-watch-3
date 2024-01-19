@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
-import { useAppDispatch, useAppSelector } from '../../hook/useAppDispatch';
+import { useAppDispatch, useAppSelector } from '../../hook/hook';
 import { getFilm } from '../../store/film-reducer/film-selector';
 import { Loader } from '../../components/loader/loader';
 import { fetchFilm } from '../../store/api-action';

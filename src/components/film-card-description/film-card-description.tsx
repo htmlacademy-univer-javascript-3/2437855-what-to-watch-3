@@ -1,17 +1,15 @@
-import React, { PropsWithChildren, useEffect, useState } from 'react';
+import { PropsWithChildren, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Film } from '../../types/film';
-import { useAppDispatch, useAppSelector } from '../../hook/useAppDispatch';
+import { useAppDispatch, useAppSelector } from '../../hook/hook';
 import {
   getChangedFilm,
   getMyListLength,
-} from '../../store/myList-reducer/myList-selector';
+} from '../../store/my-list-reducer/my-list-selector';
 import { getAuthStatus } from '../../store/user-reducer/user-selector';
-import { redirectToRoute } from '../../store/actions';
 import { changeFilmStatus, fetchMyList } from '../../store/api-action';
 import { AuthorizationStatus } from '../../types/authorization';
-import { AppRoute } from '../const';
 
 type FilmCardDescriptionProps = PropsWithChildren<{
   filmInfo: Film;
@@ -26,14 +24,10 @@ function FilmCardDescription(props: FilmCardDescriptionProps) {
   const dispatch = useAppDispatch();
 
   const authStatus = useAppSelector(getAuthStatus);
-  const changeStatus = () => {
-    if (authStatus === AuthorizationStatus.NoAuth) {
-      dispatch(redirectToRoute(AppRoute.SignIn));
-    } else {
-      dispatch(
-        changeFilmStatus({ filmId: props.filmInfo.id, status: +!isInList }),
-      );
-    }
+  const handleStatusClick = () => {
+    dispatch(
+      changeFilmStatus({ filmId: props.filmInfo.id, status: +!isInList }),
+    );
   };
 
   useEffect(() => {
@@ -63,23 +57,24 @@ function FilmCardDescription(props: FilmCardDescriptionProps) {
           </svg>
           <span>Play</span>
         </Link>
-
-        <button
-          className="btn btn--list film-card__button"
-          onClick={changeStatus}
-        >
-          {props.filmInfo?.isFavorite ? (
-            <svg viewBox="0 0 18 14" width="18" height="14">
-              <use xlinkHref="#in-list" />
-            </svg>
-          ) : (
-            <svg viewBox="0 0 19 20" width="19" height="20">
-              <use xlinkHref="#add" />
-            </svg>
-          )}
-          <span>My list</span>
-          <span className="film-card__count">{myListLength}</span>
-        </button>
+        {authStatus === AuthorizationStatus.Auth && (
+          <button
+            className="btn btn--list film-card__button"
+            onClick={handleStatusClick}
+          >
+            {isInList ? (
+              <svg viewBox="0 0 18 14" width="18" height="14">
+                <use xlinkHref="#in-list" />
+              </svg>
+            ) : (
+              <svg viewBox="0 0 19 20" width="19" height="20">
+                <use xlinkHref="#add" />
+              </svg>
+            )}
+            <span>My list</span>
+            <span className="film-card__count">{myListLength}</span>
+          </button>
+        )}
         {props.children}
       </div>
     </div>

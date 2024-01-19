@@ -3,9 +3,9 @@ import { Helmet } from 'react-helmet-async';
 
 import Logo from '../../components/logo/logo';
 import { AppRoute } from '../../components/const';
-import CommentForm from '../../components/commentForm/commentForm';
+import CommentForm from '../../components/comment-form/comment-form';
 import User from '../../components/user/user';
-import { useAppSelector } from '../../hook/useAppDispatch';
+import { useAppSelector } from '../../hook/hook';
 import { getFilm } from '../../store/film-reducer/film-selector';
 
 function AddReviewPage(): JSX.Element {

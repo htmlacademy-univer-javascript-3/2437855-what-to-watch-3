@@ -1,5 +1,5 @@
 import { State } from '../../types/state';
-import { Film, Films } from '../../types/Film';
+import { Film, Films } from '../../types/film';
 import { NameSpace } from '../../components/const';
 
 export const getFilms = (state: State): Films =>
