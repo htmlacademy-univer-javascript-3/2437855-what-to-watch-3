@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 import Footer from '../../components/footer/footer';
 
-export const Error404 = () => (
+export const ErrorPage = () => (
   <div className="error">
     <h1>Страница не найдена</h1>
     <p>
@@ -12,4 +12,4 @@ export const Error404 = () => (
   </div>
 );
 
-export default Error404;
+export default ErrorPage;

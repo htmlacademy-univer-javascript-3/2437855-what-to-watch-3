@@ -1,7 +1,7 @@
 import { State } from '../../types/state';
 import { NameSpace } from '../../components/const';
 import { Film, Films } from '../../types/film';
-import { Review } from '../../types/Review';
+import { Review } from '../../types/review';
 
 export const getFilm = (state: State): Film | null =>
   state[NameSpace.Film].film;

@@ -1,7 +1,7 @@
 import Footer from '../../components/footer/footer';
-import FilmsList from '../../components/filmList/filmList';
+import FilmsList from '../../components/film-list/film-list';
 import GenreList from '../../components/genre-list/genre-list';
-import { useAppDispatch, useAppSelector } from '../../hook/useAppDispatch';
+import { useAppDispatch, useAppSelector } from '../../hook/hook';
 import User from '../../components/user/user';
 import { fetchPromoFilm } from '../../store/api-action';
 import { useEffect } from 'react';
@@ -12,17 +12,18 @@ import {
   getSelectedGenre,
 } from '../../store/main-reducer/main-selector';
 import { Loader } from '../../components/loader/loader';
-import FilmCardDescription from '../../components/filmCardDescription/filmCardDescription';
+import FilmCardDescription from '../../components/film-card-description/film-card-description';
+import { Film, Films } from '../../types/film';
 
 function MainPage(): JSX.Element {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchPromoFilm());
   }, [dispatch]);
-  const films = useAppSelector(getFilms);
-  const promoFilm = useAppSelector(getPromoFilm);
-  const isLoading = useAppSelector(getIsLoading);
-  const currentGenre = useAppSelector(getSelectedGenre);
+  const films: Films = useAppSelector(getFilms);
+  const promoFilm: Film | null = useAppSelector(getPromoFilm);
+  const isLoading: boolean = useAppSelector(getIsLoading);
+  const currentGenre: string = useAppSelector(getSelectedGenre);
 
   return (
     <>

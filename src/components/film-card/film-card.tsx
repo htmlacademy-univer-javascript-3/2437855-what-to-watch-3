@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Film } from '../../types/film';
-import VideoPlayer from '../video-player/VideoPlayer';
-import './filmCard.css';
+import VideoPlayer from '../video-player/video-player';
+import { TIMEOUT_ACTIVE_VIDEO } from '../const';
+import './film-card.css';
 
 export type FilmCardProps = {
   film: Film;
@@ -17,7 +18,7 @@ function FilmCard({ film }: FilmCardProps): JSX.Element {
     let isMounted = true;
 
     if (needToActiveVideo) {
-      setTimeout(() => isMounted && setIsPlaying(true), 1000);
+      setTimeout(() => isMounted && setIsPlaying(true), TIMEOUT_ACTIVE_VIDEO);
     }
 
     return () => {
