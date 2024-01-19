@@ -1,4 +1,4 @@
-import { useAppSelector, useAppDispatch } from '../../hook/useAppDispatch.ts';
+import { useAppSelector, useAppDispatch } from '../../hook/hook.ts';
 import {
   getGenres,
   getSelectedGenre,

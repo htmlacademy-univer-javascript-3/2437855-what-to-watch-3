@@ -8,7 +8,7 @@ import {
   fetchSimilarFilms,
   postReview,
 } from '../api-action';
-import { useAppDispatch } from '../../hook/useAppDispatch';
+import { useAppDispatch } from '../../hook/hook';
 import { redirectToRoute } from '../actions';
 
 const initialState: FilmData = {

@@ -1,7 +1,7 @@
 import Footer from '../../components/footer/footer';
-import FilmsList from '../../components/filmList/filmList';
+import FilmsList from '../../components/film-list/film-list';
 import GenreList from '../../components/genre-list/genre-list';
-import { useAppDispatch, useAppSelector } from '../../hook/useAppDispatch';
+import { useAppDispatch, useAppSelector } from '../../hook/hook';
 import User from '../../components/user/user';
 import { fetchPromoFilm } from '../../store/api-action';
 import { useEffect } from 'react';
@@ -12,7 +12,7 @@ import {
   getSelectedGenre,
 } from '../../store/main-reducer/main-selector';
 import { Loader } from '../../components/loader/loader';
-import FilmCardDescription from '../../components/filmCardDescription/filmCardDescription';
+import FilmCardDescription from '../../components/film-card-description/film-card-description';
 
 function MainPage(): JSX.Element {
   const dispatch = useAppDispatch();

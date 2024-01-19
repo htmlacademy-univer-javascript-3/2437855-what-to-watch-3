@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react';
 
 import { Films } from '../../types/film';
-import FilmCard from '../filmCard/filmCard';
+import FilmCard from '../film-card/film-card';
+import { VISIBLE_FILM_CARD_COUNT } from '../const';
 
 type FilmsListProps = {
   films: Films;
@@ -13,7 +14,10 @@ function FilmsList({ films, genre }: FilmsListProps): JSX.Element {
     genre === 'All Genres'
       ? films
       : films.filter((film) => film.genre === genre);
-  const initialNumberOfFilms = filmsToShow.length > 8 ? 8 : filmsToShow.length;
+  const initialNumberOfFilms =
+    filmsToShow.length > VISIBLE_FILM_CARD_COUNT
+      ? VISIBLE_FILM_CARD_COUNT
+      : filmsToShow.length;
   const [numberOfFilmsToShow, setNumberOfFilmsToShow] =
     useState(initialNumberOfFilms);
 
@@ -43,7 +47,10 @@ function FilmsList({ films, genre }: FilmsListProps): JSX.Element {
           <button
             className="catalog__button"
             type="button"
-            onClick={() => setNumberOfFilmsToShow(numberOfFilmsToShow + 8)}
+            onClick={() =>
+              setNumberOfFilmsToShow(
+                numberOfFilmsToShow + VISIBLE_FILM_CARD_COUNT,
+              )}
           >
             Show more
           </button>

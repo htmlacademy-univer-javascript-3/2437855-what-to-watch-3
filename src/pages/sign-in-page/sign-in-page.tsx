@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 
 import Logo from '../../components/logo/logo';
 import Footer from '../../components/footer/footer';
-import { useAppDispatch, useAppSelector } from '../../hook/useAppDispatch';
+import { useAppDispatch, useAppSelector } from '../../hook/hook';
 import { AuthorizationStatus, LogInError } from '../../types/authorization';
 import { login } from '../../store/api-action';
 import { setLoginError } from '../../store/user-reducer/user-reducer';
@@ -11,6 +11,7 @@ import {
   getAuthStatus,
   getLoginError,
 } from '../../store/user-reducer/user-selector';
+import { RE_EMAIL, RE_PASSWORD } from '../../components/const';
 
 function SignInPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -22,16 +23,14 @@ function SignInPage(): JSX.Element {
   const loginError = useAppSelector(getLoginError);
   const formRef = useRef(null);
 
-  const RE_PASSWORD = /(?=.*[0-9])(?=.*[a-zA-Z])[0-9a-zA-Z]{2,}/;
-  const RE_EMAIL = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
   const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
     const isValidEmail = () =>
-      emailField === null || !RE_EMAIL.test(emailField);
+      !emailField || !RE_EMAIL.test(emailField);
     const isValidPassword = () =>
-      passwordField === null || !RE_PASSWORD.test(passwordField);
+      !passwordField || !RE_PASSWORD.test(passwordField);
 
     if (formRef.current) {
       if (isValidEmail() && isValidPassword()) {

@@ -5,20 +5,20 @@ import Logo from '../../components/logo/logo';
 import Footer from '../../components/footer/footer';
 import FilmTabs from '../../components/film-tabs/film-tabs';
 import User from '../../components/user/user';
-import { useAppDispatch, useAppSelector } from '../../hook/useAppDispatch';
+import { useAppDispatch, useAppSelector } from '../../hook/hook';
 import {
   fetchFilm,
   fetchReviews,
   fetchSimilarFilms,
 } from '../../store/api-action';
-import FilmsList from '../../components/filmList/filmList';
+import FilmsList from '../../components/film-list/film-list';
 import { getAuthStatus } from '../../store/user-reducer/user-selector';
 import {
   getFilm,
   getSimilarFilms,
   getSimilarFilmsLoaded,
 } from '../../store/film-reducer/film-selector';
-import FilmCardDescription from '../../components/filmCardDescription/filmCardDescription';
+import FilmCardDescription from '../../components/film-card-description/film-card-description';
 import { AuthorizationStatus } from '../../types/authorization';
 import { Loader } from '../../components/loader/loader';
 

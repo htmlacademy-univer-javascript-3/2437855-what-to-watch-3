@@ -1,8 +1,7 @@
 import { store } from '../store';
-import User from '../components/user/user';
 import { Review } from './review';
 import { Film, Films } from './film';
-import { AuthorizationStatus, LogInError } from './authorization';
+import { AuthorizationStatus, LogInError, UserData } from './authorization';
 
 export type State = ReturnType<typeof store.getState>;
 
@@ -10,7 +9,7 @@ export type AppDispatch = typeof store.dispatch;
 
 export type AuthProcess = {
   authorizationStatus: AuthorizationStatus;
-  user: User | null;
+  user: UserData | null;
   loginError: LogInError;
 };
 

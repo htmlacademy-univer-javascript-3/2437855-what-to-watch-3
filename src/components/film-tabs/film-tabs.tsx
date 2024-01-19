@@ -39,8 +39,8 @@ function FilmTabs(props: FilmTabs) {
     );
   };
 
-  const renderTab = (name: string) => {
-    switch (name) {
+  const tabContent = useMemo(() => {
+    switch (tab) {
       case 'Details':
         return <Details filmInfo={props.filmInfo} />;
       case 'Reviews':
@@ -48,9 +48,7 @@ function FilmTabs(props: FilmTabs) {
       default:
         return <Overview filmInfo={props.filmInfo} />;
     }
-  };
-
-  const tabContent = useMemo(() => renderTab(tab), [tab]);
+  }, [props.filmInfo, tab]);
 
   return (
     <div className="film-card__desc">

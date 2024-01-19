@@ -1,22 +1,8 @@
-import React, { useMemo } from 'react';
+import React, { Fragment, JSX } from 'react';
 
 import { Film } from '../../../types/film';
 
 function Details({ filmInfo }: { filmInfo: Film }): JSX.Element {
-  const renderStarringActors = (starring: string[]) =>
-    starring
-      .slice(0, starring.length - 1)
-      .map((actor) => (
-        <p key={actor} style={{ margin: '0' }}>
-          {actor},
-        </p>
-      ))
-      .concat(<p style={{ margin: '0' }}>{starring[starring.length - 1]}</p>);
-  const starringActors = useMemo(
-    () => renderStarringActors(filmInfo.starring),
-    [filmInfo],
-  );
-
   return (
     <div className="film-card__text film-card__row">
       <div className="film-card__text-col">
@@ -26,7 +12,17 @@ function Details({ filmInfo }: { filmInfo: Film }): JSX.Element {
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Starring</strong>
-          <span className="film-card__details-value">{starringActors}</span>
+          <span className="film-card__details-value">
+            {filmInfo.starring.map((actor, index) =>
+              index + 1 === filmInfo.starring.length ? (
+                actor
+              ) : (
+                <Fragment key={actor}>
+                  {actor}, <br />
+                </Fragment>
+              ),
+            )}
+          </span>
         </p>
       </div>
 
