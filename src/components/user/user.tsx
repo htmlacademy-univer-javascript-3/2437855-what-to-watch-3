@@ -24,7 +24,7 @@ function User(): JSX.Element | null {
           >
             <Link to={AppRoute.MyList}>
               <img
-                src={userData.avatarUrl}
+                src={userData?.avatarUrl}
                 alt="User avatar"
                 width="63"
                 height="63"
@@ -56,6 +56,9 @@ function User(): JSX.Element | null {
         </li>
       </ul>
     );
+  }
+  if (authorizationStatus === AuthorizationStatus.Unknown) {
+    return null;
   }
 }
 
