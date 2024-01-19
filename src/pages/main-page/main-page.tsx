@@ -13,16 +13,17 @@ import {
 } from '../../store/main-reducer/main-selector';
 import { Loader } from '../../components/loader/loader';
 import FilmCardDescription from '../../components/film-card-description/film-card-description';
+import { Film, Films } from '../../types/film';
 
 function MainPage(): JSX.Element {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchPromoFilm());
   }, [dispatch]);
-  const films = useAppSelector(getFilms);
-  const promoFilm = useAppSelector(getPromoFilm);
-  const isLoading = useAppSelector(getIsLoading);
-  const currentGenre = useAppSelector(getSelectedGenre);
+  const films: Films = useAppSelector(getFilms);
+  const promoFilm: Film | null = useAppSelector(getPromoFilm);
+  const isLoading: boolean = useAppSelector(getIsLoading);
+  const currentGenre: string = useAppSelector(getSelectedGenre);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import React, { Fragment, JSX } from 'react';
+import { Fragment, JSX } from 'react';
 
 import { Film } from '../../../types/film';
 

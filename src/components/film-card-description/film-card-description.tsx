@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useEffect, useState } from 'react';
+import { PropsWithChildren, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Film } from '../../types/film';
