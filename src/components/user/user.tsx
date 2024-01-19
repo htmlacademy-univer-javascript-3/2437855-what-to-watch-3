@@ -57,9 +57,7 @@ function User(): JSX.Element | null {
       </ul>
     );
   }
-  if (authorizationStatus === AuthorizationStatus.Unknown) {
-    return null;
-  }
+  return null;
 }
 
 export default User;
